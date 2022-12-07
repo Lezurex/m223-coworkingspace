@@ -53,7 +53,7 @@ public class ApplicationUserControllerTest {
 
   @Test
   public void testDeleteEndpoint() {
-    given().when().delete("/7").then().statusCode(204);
+    given().when().delete("/2").then().statusCode(204);
   }
 
 }

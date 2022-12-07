@@ -14,9 +14,9 @@ import com.lezurex.m223.coworkingspace.model.TimeframeEnum;
 import io.quarkus.arc.profile.IfBuildProfile;
 import io.quarkus.runtime.StartupEvent;
 
-@IfBuildProfile("test")
+@IfBuildProfile("dev")
 @ApplicationScoped
-public class TestDataService {
+public class DevDataService {
 
   @Inject
   EntityManager entityManager;
@@ -44,11 +44,10 @@ public class TestDataService {
 
   @Transactional
   public void clearData() {
-    entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
-    entityManager.createNativeQuery("TRUNCATE TABLE booking RESTART IDENTITY").executeUpdate();
-    entityManager.createNativeQuery("TRUNCATE TABLE applicationuser RESTART IDENTITY")
+    entityManager.createNativeQuery("TRUNCATE TABLE booking RESTART IDENTITY CASCADE")
         .executeUpdate();
-    entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
+    entityManager.createNativeQuery("TRUNCATE TABLE applicationuser RESTART IDENTITY CASCADE")
+        .executeUpdate();
   }
 
 }
