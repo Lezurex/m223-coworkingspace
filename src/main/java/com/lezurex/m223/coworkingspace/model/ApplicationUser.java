@@ -1,21 +1,20 @@
 package com.lezurex.m223.coworkingspace.model;
 
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Length;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@NamedQueries({@NamedQuery(name = "ApplicationUser.findByEmail",
+    query = "SELECT u FROM ApplicationUser u WHERE u.email = :email")})
 public class ApplicationUser {
 
   @Id
@@ -31,11 +30,6 @@ public class ApplicationUser {
   @Column(nullable = false)
   @Length(min = 8)
   private String password;
-
-  @OneToMany(mappedBy = "applicationUser")
-  @JsonIgnore
-  @Fetch(FetchMode.JOIN)
-  private Set<Entry> entries;
 
   public ApplicationUser(String email, String password) {
     this.email = email;
@@ -72,13 +66,4 @@ public class ApplicationUser {
     return email;
   }
 
-  public Set<Entry> getEntries() {
-    return entries;
-  }
-
-  public void setEntries(Set<Entry> entries) {
-    this.entries = entries;
-  }
-
 }
-
