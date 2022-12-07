@@ -2,6 +2,8 @@ package com.lezurex.m223.coworkingspace.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,12 +30,29 @@ public class ApplicationUser {
   private String email;
 
   @Column(nullable = false)
-  @Length(min = 8)
-  private String password;
+  @NotBlank(message = "Firstname may not be blank.")
+  private String firstname;
+  @Column(nullable = false)
+  @NotBlank(message = "Lastname may not be blank.")
+  private String lastname;
 
-  public ApplicationUser(String email, String password) {
+  @Column(nullable = false)
+  @Length(min = 8, message = "Password has to be at least 8 characters.")
+  private String passwordHash;
+
+  @Enumerated(EnumType.STRING)
+  private RoleEnum role;
+
+  public ApplicationUser(@NotBlank(message = "Email may not be blank.") @Email String email,
+      @NotBlank(message = "Firstname may not be blank.") String firstname,
+      @NotBlank(message = "Lastname may not be blank.") String lastname,
+      @Length(min = 8, message = "Password has to be at least 8 characters.") String passwordHash,
+      RoleEnum role) {
     this.email = email;
-    this.password = password;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.passwordHash = passwordHash;
+    this.role = role;
   }
 
   public ApplicationUser() {}
@@ -54,16 +73,40 @@ public class ApplicationUser {
     this.email = username;
   }
 
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
   public String getEmail() {
     return email;
+  }
+
+  public String getFirstname() {
+    return firstname;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  public String getLastname() {
+    return lastname;
+  }
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
+  }
+
+  public String getPasswordHash() {
+    return passwordHash;
+  }
+
+  public void setPasswordHash(String passwordHash) {
+    this.passwordHash = passwordHash;
+  }
+
+  public RoleEnum getRole() {
+    return role;
+  }
+
+  public void setRole(RoleEnum role) {
+    this.role = role;
   }
 
 }

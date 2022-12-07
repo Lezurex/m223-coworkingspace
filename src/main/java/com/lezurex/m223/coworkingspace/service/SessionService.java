@@ -20,7 +20,8 @@ public class SessionService {
   public Response authenticate(Credential credential) {
     Optional<ApplicationUser> principal = applicationUserService.findByEmail(credential.getEmail());
     try {
-      if (principal.isPresent() && principal.get().getPassword().equals(credential.getPassword())) {
+      if (principal.isPresent()
+          && principal.get().getPasswordHash().equals(credential.getPassword())) {
         String token = Jwt.issuer("https://example.com/issuer").upn("joerg@example.com")
             .groups(new HashSet<>(Arrays.asList("user", "admin")))
             .claim(Claims.birthdate.name(), "2001-07-13").sign();

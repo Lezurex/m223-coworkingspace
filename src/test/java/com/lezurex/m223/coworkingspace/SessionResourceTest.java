@@ -14,7 +14,7 @@ public class SessionResourceTest {
 
   @Test
   public void testLogin() {
-    var credentials = new Credential("hans@example.com", "HansFTW123");
+    var credentials = new Credential("lisbeth.zbinden@bluewin.ch", "RacletteZumZmorge123");
     given().when().contentType(ContentType.JSON).body(credentials).post().then().statusCode(200);
   }
 
