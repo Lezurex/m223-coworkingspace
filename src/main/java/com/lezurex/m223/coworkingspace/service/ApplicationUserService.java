@@ -23,6 +23,7 @@ public class ApplicationUserService {
   @Transactional
   public void deleteApplicationUser(Long id) {
     var applicationUser = entityManager.find(ApplicationUser.class, id);
+    applicationUser.getBookings().forEach(b -> entityManager.remove(b));
     entityManager.remove(applicationUser);
   }
 

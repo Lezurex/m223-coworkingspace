@@ -1,5 +1,6 @@
 package com.lezurex.m223.coworkingspace.model;
 
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,10 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.hibernate.validator.constraints.Length;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @NamedQueries({@NamedQuery(name = "ApplicationUser.findByEmail",
@@ -42,6 +45,9 @@ public class ApplicationUser {
 
   @Enumerated(EnumType.STRING)
   private RoleEnum role;
+
+  @OneToMany(mappedBy = "applicationUser")
+  private Set<Booking> bookings;
 
   public ApplicationUser(@NotBlank(message = "Email may not be blank.") @Email String email,
       @NotBlank(message = "Firstname may not be blank.") String firstname,
@@ -107,6 +113,15 @@ public class ApplicationUser {
 
   public void setRole(RoleEnum role) {
     this.role = role;
+  }
+
+  @JsonIgnore
+  public Set<Booking> getBookings() {
+    return bookings;
+  }
+
+  public void setBookings(Set<Booking> bookings) {
+    this.bookings = bookings;
   }
 
 }

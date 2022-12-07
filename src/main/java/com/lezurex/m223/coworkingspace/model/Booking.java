@@ -32,4 +32,54 @@ public class Booking {
   @ManyToOne
   private ApplicationUser applicationUser;
 
+  public Booking(LocalDate date, TimeframeEnum timeframe, StatusEnum status,
+      ApplicationUser applicationUser) {
+    this.date = date;
+    this.timeframe = timeframe;
+    this.status = status;
+    this.applicationUser = applicationUser;
+  }
+
+  public Booking() {}
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public LocalDate getDate() {
+    return date;
+  }
+
+  public void setDate(LocalDate date) {
+    this.date = date;
+  }
+
+  public TimeframeEnum getTimeframe() {
+    return timeframe;
+  }
+
+  public void setTimeframe(TimeframeEnum timeframe) {
+    this.timeframe = timeframe;
+  }
+
+  public StatusEnum getStatus() {
+    return status;
+  }
+
+  public void setStatus(StatusEnum status) {
+    this.status = status;
+  }
+
+  public ApplicationUser getApplicationUser() {
+    return applicationUser;
+  }
+
+  public void setApplicationUser(ApplicationUser applicationUser) {
+    this.applicationUser = applicationUser;
+  }
+
 }
