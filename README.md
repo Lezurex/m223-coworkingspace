@@ -1,22 +1,10 @@
-Dieses Projekt ist ein Fork von <https://github.com/zlict/m223-punchclock>.
+Dieses Projekt ist ein Fork von <https://github.com/Lezurex/m223-punchclock> bzw. <https://github.com/zlict/m223-punchclock>.
 
 ---
 
-# Übungsprojekt: Punch Clock
+# Übungsprojekt: Coworking Space 
 
-Punch Clock ist ein Zeiterfassungssystem, welches mit Quarkus entwickelt wird.
-
-## Erste Schritte
-
-1. Erstelle eine Kopie (fork) von diesem Projekt.
-1. Stelle sicher, dass Docker installiert ist und läuft.
-1. Stelle sicher, dass Visual Studio Code und die Erweiterung Remote Container installiert ist.
-1. Klone (clone) das Projekt lokal, um damit arbeiten zu können.
-1. Öffne das Projekt mit Visual Studio Code.
-1. Öffne das Projekt im Entwicklungscontainer.
-1. Starte das Projekt mit dem Kommando `Quarkus: Debug current Quarkus Project`
-1. Probiere die Client-Applikation unter http://localhost:8080 aus.
-1. Schaue die API auf http://localhost:8080/q/swagger-ui/ an.
+Dieses Projekt ist ein System für Buchungen eines Coworking Spaces, welches mit Quarkus entwickelt wird.
 
 ## Datenbank
 

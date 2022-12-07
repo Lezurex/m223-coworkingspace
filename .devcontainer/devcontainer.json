@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/java-postgres
 {
-  "name": "Punchclock",
+  "name": "Coworking Space",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspace",
@@ -11,14 +11,13 @@
     // Configure properties specific to VS Code.
     "vscode": {
       // Set *default* container specific settings.json values on container create.
-      "settings": { 
-      },
-      
+      "settings": {},
+
       // Add the IDs of extensions you want installed when the container is created.
       "extensions": [
         "vscjava.vscode-java-pack",
-	"redhat.vscode-quarkus",
-	"theumletteam.umlet"
+        "redhat.vscode-quarkus",
+        "theumletteam.umlet"
       ]
     }
   },
