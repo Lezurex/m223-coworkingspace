@@ -1,8 +1,8 @@
 package com.lezurex.m223.coworkingspace.controller;
 
 import java.util.List;
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -13,9 +13,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import com.lezurex.m223.coworkingspace.model.Booking;
+import com.lezurex.m223.coworkingspace.model.StatusEnum;
+import com.lezurex.m223.coworkingspace.service.ApplicationUserService;
 import com.lezurex.m223.coworkingspace.service.BookingService;
 
 @Path("/bookings")
@@ -24,30 +27,40 @@ import com.lezurex.m223.coworkingspace.service.BookingService;
 public class BookingController {
 
   @Inject
-  BookingService BookingService;
+  BookingService bookingService;
+
+  @Inject
+  ApplicationUserService userService;
+
+  @Inject
+  @RequestScoped
+  SecurityContext ctx;
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Operation(summary = "Index all bookings.", description = "Returns a list of all bookings.")
   public List<Booking> index() {
-    return BookingService.findAll();
+    return bookingService.findAll();
   }
 
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
-  @PermitAll
   @Operation(summary = "Creates a new booking.",
       description = "Creates a new booking and returns the newly created booking.")
-  public Booking create(Booking Booking) {
-    return BookingService.createBooking(Booking);
+  public Booking create(Booking booking) {
+    var user = userService.findByEmail(ctx.getUserPrincipal().getName());
+    assert user.isPresent();
+    booking.setApplicationUser(user.get());
+    booking.setStatus(StatusEnum.PENDING);
+    return bookingService.createBooking(booking);
   }
 
   @DELETE
   @Operation(summary = "Deletes a booking.", description = "Deletes a booking irrecoverarble.")
   @Path("/{id}")
   public void delete(@PathParam("id") long id) {
-    BookingService.deleteBooking(id);
+    bookingService.deleteBooking(id);
   }
 
   @PUT
@@ -57,7 +70,7 @@ public class BookingController {
   @Path("/{id}")
   public Booking update(Booking booking, @PathParam("id") long id) {
     booking.setId(id);
-    return BookingService.updateBooking(booking);
+    return bookingService.updateBooking(booking);
   }
 
 }

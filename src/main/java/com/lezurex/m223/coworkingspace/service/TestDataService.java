@@ -42,6 +42,7 @@ public class TestDataService {
     entityManager.persist(bookingB);
   }
 
+  @Transactional
   private void clearData() {
     entityManager.createQuery("DELETE FROM Booking").executeUpdate();
     entityManager.createQuery("DELETE FROM ApplicationUser").executeUpdate();
