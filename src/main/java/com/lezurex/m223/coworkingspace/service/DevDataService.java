@@ -6,6 +6,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import com.lezurex.m223.coworkingspace.JacocoIgnoreGenerated;
 import com.lezurex.m223.coworkingspace.model.ApplicationUser;
 import com.lezurex.m223.coworkingspace.model.Booking;
 import com.lezurex.m223.coworkingspace.model.RoleEnum;
@@ -14,6 +15,7 @@ import com.lezurex.m223.coworkingspace.model.TimeframeEnum;
 import io.quarkus.arc.profile.IfBuildProfile;
 import io.quarkus.runtime.StartupEvent;
 
+@JacocoIgnoreGenerated
 @IfBuildProfile("dev")
 @ApplicationScoped
 public class DevDataService {
