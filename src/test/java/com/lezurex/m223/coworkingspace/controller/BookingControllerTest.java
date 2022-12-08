@@ -23,7 +23,7 @@ import io.restassured.http.ContentType;
 @QuarkusTest
 @TestHTTPEndpoint(BookingController.class)
 @TestMethodOrder(OrderAnnotation.class)
-@TestSecurity(user = "lisbeth.zbinden@bluewin.ch", roles = "user")
+@TestSecurity(user = "lisbeth.zbinden@bluewin.ch", roles = "member")
 public class BookingControllerTest {
 
   @Inject

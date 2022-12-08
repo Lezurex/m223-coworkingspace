@@ -20,7 +20,7 @@ import com.lezurex.m223.coworkingspace.service.ApplicationUserService;
 
 @Path("/users")
 @Tag(name = "Users", description = "Handling of users.")
-@RolesAllowed({"user", "admin"})
+@RolesAllowed({"member", "admin"})
 public class ApplicationUserController {
 
   @Inject

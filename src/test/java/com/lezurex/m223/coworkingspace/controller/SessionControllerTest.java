@@ -12,7 +12,7 @@ import io.restassured.http.ContentType;
 
 @QuarkusTest
 @TestHTTPEndpoint(SessionController.class)
-public class SessionResourceController {
+public class SessionControllerTest {
 
   @Inject
   TestDataService testDataService;

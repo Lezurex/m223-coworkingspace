@@ -43,6 +43,8 @@ public class ApplicationUser {
   @Length(min = 8, message = "Password has to be at least 8 characters.")
   private String passwordHash;
 
+  private String favouriteCoffee;
+
   @Enumerated(EnumType.STRING)
   private RoleEnum role;
 
@@ -69,10 +71,6 @@ public class ApplicationUser {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-  public String getUsername() {
-    return email;
   }
 
   public void setEmail(String username) {
@@ -122,6 +120,14 @@ public class ApplicationUser {
 
   public void setBookings(Set<Booking> bookings) {
     this.bookings = bookings;
+  }
+
+  public String getFavouriteCoffee() {
+    return favouriteCoffee;
+  }
+
+  public void setFavouriteCoffee(String favouriteCoffee) {
+    this.favouriteCoffee = favouriteCoffee;
   }
 
 }

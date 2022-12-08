@@ -17,7 +17,7 @@ import io.restassured.http.ContentType;
 
 @QuarkusTest
 @TestHTTPEndpoint(ApplicationUserController.class)
-@TestSecurity(user = "hans@test.com", roles = "user")
+@TestSecurity(user = "hans@test.com", roles = "member")
 public class ApplicationUserControllerTest {
 
   @Inject

@@ -23,7 +23,7 @@ import com.lezurex.m223.coworkingspace.service.BookingService;
 
 @Path("/bookings")
 @Tag(name = "Bookings", description = "Handling of bookings.")
-@RolesAllowed({"user", "admin"})
+@RolesAllowed({"member", "admin"})
 public class BookingController {
 
   @Inject
