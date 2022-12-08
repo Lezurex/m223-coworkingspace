@@ -21,7 +21,6 @@ import com.lezurex.m223.coworkingspace.service.HashingService;
 
 @Path("/users")
 @Tag(name = "Users", description = "Handling of users.")
-@RolesAllowed({"member", "admin"})
 public class ApplicationUserController {
 
   @Inject
@@ -33,6 +32,7 @@ public class ApplicationUserController {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Operation(summary = "Index all users.", description = "Returns a list of all users.")
+  @RolesAllowed("admin")
   public List<ApplicationUser> index() {
     return applicationUserService.findAll();
   }
@@ -52,6 +52,7 @@ public class ApplicationUserController {
   @DELETE
   @Operation(summary = "Deletes a user.", description = "Deletes a user irrecoverarble.")
   @Path("/{id}")
+  @RolesAllowed("admin")
   public void delete(@PathParam("id") long id) {
     applicationUserService.deleteApplicationUser(id);
   }
@@ -61,7 +62,9 @@ public class ApplicationUserController {
   @Consumes(MediaType.APPLICATION_JSON)
   @Operation(summary = "Updates a user.", description = "Updates a user.")
   @Path("/{id}")
+  @RolesAllowed("admin")
   public ApplicationUser update(ApplicationUser applicationUser, @PathParam("id") long id) {
+    applicationUser.setPasswordHash(hashingService.hashPassword(applicationUser.getPasswordHash()));
     applicationUser.setId(id);
     return applicationUserService.updateApplicationUser(applicationUser);
   }
