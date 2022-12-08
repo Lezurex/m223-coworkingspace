@@ -1,6 +1,7 @@
 package com.lezurex.m223.coworkingspace.controller;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
 import javax.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,9 +24,29 @@ public class SessionControllerTest {
   }
 
   @Test
-  public void testLogin() {
+  public void testLoginCorrectMember() {
     var credentials = new Credential("lisbeth.zbinden@bluewin.ch", "RacletteZumZmorgu123");
-    given().when().contentType(ContentType.JSON).body(credentials).post().then().statusCode(200);
+    given().when().contentType(ContentType.JSON).body(credentials).post().then().statusCode(200)
+        .body("role", is("MEMBER"));
+  }
+
+  @Test
+  public void testLoginCorrectAdmin() {
+    var credentials = new Credential("jonathan.meier@coworking.ch", "JonathanFTW123");
+    given().when().contentType(ContentType.JSON).body(credentials).post().then().statusCode(200)
+        .body("role", is("ADMIN"));
+  }
+
+  @Test
+  public void testLoginWrongEmail() {
+    var credentials = new Credential("elisabeth.zbinden@bluewin.ch", "RacletteZumZmorgu123");
+    given().when().contentType(ContentType.JSON).body(credentials).post().then().statusCode(403);
+  }
+
+  @Test
+  public void testLoginWrongPassword() {
+    var credentials = new Credential("lisbeth.zbinden@bluewin.ch", "RacletteZumZmorguuuuu123");
+    given().when().contentType(ContentType.JSON).body(credentials).post().then().statusCode(403);
   }
 
 }

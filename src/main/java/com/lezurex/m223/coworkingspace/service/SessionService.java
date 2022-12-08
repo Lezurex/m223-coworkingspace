@@ -22,18 +22,14 @@ public class SessionService {
 
   public Response authenticate(Credential credential) {
     Optional<ApplicationUser> principal = applicationUserService.findByEmail(credential.getEmail());
-    try {
-      if (principal.isPresent()
-          && principal.get().getPasswordHash().equals(credential.getPassword())) {
-        var jwt = Jwt.issuer("https://example.com/issuer").upn(principal.get().getEmail())
-            .expiresIn(Duration.ofDays(1)).groups(new HashSet<>(Arrays.asList("user", "admin")));
-        setRoles(jwt, principal.get());
-        String token = jwt.sign();
-        return Response.ok(principal.get()).cookie(new NewCookie("coworking", token))
-            .header("Authorization", "Bearer " + token).build();
-      }
-    } catch (Exception e) {
-      System.err.println("Couldn't validate password.");
+    if (principal.isPresent()
+        && principal.get().getPasswordHash().equals(credential.getPassword())) {
+      var jwt = Jwt.issuer("https://example.com/issuer").upn(principal.get().getEmail())
+          .expiresIn(Duration.ofDays(1)).groups(new HashSet<>(Arrays.asList("user", "admin")));
+      setRoles(jwt, principal.get());
+      String token = jwt.sign();
+      return Response.ok(principal.get()).cookie(new NewCookie("coworking", token))
+          .header("Authorization", "Bearer " + token).build();
     }
     return Response.status(403).build();
   }
