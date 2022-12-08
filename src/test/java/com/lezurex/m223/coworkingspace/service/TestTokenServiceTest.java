@@ -10,7 +10,7 @@ public class TestTokenServiceTest {
 
   @Test
   public void test() {
-    tokenService.generateToken();
+    tokenService.printToken(null);
   }
 
 }
