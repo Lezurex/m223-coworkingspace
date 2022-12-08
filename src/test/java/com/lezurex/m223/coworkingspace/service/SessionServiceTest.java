@@ -1,6 +1,8 @@
 package com.lezurex.m223.coworkingspace.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import javax.inject.Inject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +30,8 @@ public class SessionServiceTest {
     var credential = new Credential("lisbeth.zbinden@bluewin.ch", "RacletteZumZmorgu123");
     var response = service.authenticate(credential);
     assertEquals(response.getStatus(), 200);
+    assertTrue(response.getHeaders().get("Authorization").get(0).toString().startsWith("Bearer"));
+    assertNotNull(response.getCookies().get("coworking").toString());
   }
 
 }
