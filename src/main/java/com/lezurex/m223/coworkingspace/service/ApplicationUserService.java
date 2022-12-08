@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.Transactional;
+import javax.ws.rs.NotFoundException;
 import com.lezurex.m223.coworkingspace.model.ApplicationUser;
 import com.lezurex.m223.coworkingspace.model.RoleEnum;
 
@@ -37,6 +38,9 @@ public class ApplicationUserService {
   @Transactional
   public void deleteApplicationUser(Long id) {
     var applicationUser = entityManager.find(ApplicationUser.class, id);
+    if (applicationUser == null) {
+      throw new NotFoundException();
+    }
     applicationUser.getBookings().forEach(b -> entityManager.remove(b));
     entityManager.remove(applicationUser);
   }
@@ -60,6 +64,9 @@ public class ApplicationUserService {
 
   public ApplicationUser findById(long id) {
     var user = entityManager.find(ApplicationUser.class, id);
+    if (user == null) {
+      throw new NotFoundException();
+    }
     return user;
   }
 

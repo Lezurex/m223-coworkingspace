@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -48,7 +49,7 @@ public class BookingController {
   @Consumes(MediaType.APPLICATION_JSON)
   @Operation(summary = "Creates a new booking.",
       description = "Creates a new booking and returns the newly created booking.")
-  public Booking create(Booking booking) {
+  public Booking create(@Valid Booking booking) {
     var user = userService.findByEmail(ctx.getUserPrincipal().getName());
     assert user.isPresent();
     booking.setApplicationUser(user.get());
@@ -68,7 +69,7 @@ public class BookingController {
   @Consumes(MediaType.APPLICATION_JSON)
   @Operation(summary = "Updates a booking.", description = "Updates a booking.")
   @Path("/{id}")
-  public Booking update(Booking booking, @PathParam("id") long id) {
+  public Booking update(@Valid Booking booking, @PathParam("id") long id) {
     booking.setId(id);
     return bookingService.updateBooking(booking);
   }

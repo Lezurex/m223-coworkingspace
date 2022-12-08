@@ -48,6 +48,15 @@ public class ApplicationUserControllerTest {
   }
 
   @Test
+  public void testPostInvalid() {
+    var payload = new ApplicationUser();
+    payload.setEmail("not an email");
+    payload.setPasswordHash("notapw");
+
+    given().when().contentType(ContentType.JSON).body(payload).post().then().statusCode(400);
+  }
+
+  @Test
   @TestSecurity(user = "jonathan.meier@coworking.ch", roles = "admin")
   public void testPutEndpoint() {
     var payload = new ApplicationUser("thanam.pangri@tbsana.ch", "Thanam", "Pangri", "ThanamFTW123",
@@ -66,4 +75,9 @@ public class ApplicationUserControllerTest {
     given().when().delete("/2").then().statusCode(204);
   }
 
+  @Test
+  @TestSecurity(user = "jonathan.meier@coworking.ch", roles = "admin")
+  public void testDeleteNotFound() {
+    given().when().delete("/100").then().statusCode(404);
+  }
 }

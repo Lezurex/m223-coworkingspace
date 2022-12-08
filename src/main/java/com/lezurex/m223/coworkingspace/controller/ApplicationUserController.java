@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -43,7 +44,7 @@ public class ApplicationUserController {
   @PermitAll
   @Operation(summary = "Creates a new user.",
       description = "Creates a new user and returns the newly added user.")
-  public ApplicationUser create(ApplicationUser applicationUser) {
+  public ApplicationUser create(@Valid ApplicationUser applicationUser) {
     applicationUser.setPasswordHash(hashingService.hashPassword(applicationUser.getPasswordHash()));
 
     return applicationUserService.createApplicationUser(applicationUser);
@@ -63,7 +64,7 @@ public class ApplicationUserController {
   @Operation(summary = "Updates a user.", description = "Updates a user.")
   @Path("/{id}")
   @RolesAllowed("admin")
-  public ApplicationUser update(ApplicationUser applicationUser, @PathParam("id") long id) {
+  public ApplicationUser update(@Valid ApplicationUser applicationUser, @PathParam("id") long id) {
     applicationUser.setPasswordHash(hashingService.hashPassword(applicationUser.getPasswordHash()));
     applicationUser.setId(id);
     return applicationUserService.updateApplicationUser(applicationUser);

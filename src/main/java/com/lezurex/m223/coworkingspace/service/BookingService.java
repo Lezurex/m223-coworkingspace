@@ -5,6 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import javax.ws.rs.NotFoundException;
 import com.lezurex.m223.coworkingspace.model.Booking;
 
 @ApplicationScoped
@@ -22,6 +23,9 @@ public class BookingService {
   @Transactional
   public void deleteBooking(Long id) {
     var booking = entityManager.find(Booking.class, id);
+    if (booking == null) {
+      throw new NotFoundException();
+    }
     entityManager.remove(booking);
   }
 
