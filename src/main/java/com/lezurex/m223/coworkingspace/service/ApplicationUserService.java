@@ -5,8 +5,11 @@ import java.util.Optional;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.Transactional;
 import com.lezurex.m223.coworkingspace.model.ApplicationUser;
+import com.lezurex.m223.coworkingspace.model.RoleEnum;
 
 @ApplicationScoped
 public class ApplicationUserService {
@@ -16,6 +19,17 @@ public class ApplicationUserService {
 
   @Transactional
   public ApplicationUser createApplicationUser(ApplicationUser applicationUser) {
+    CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+    CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+    cq.select(cb.count(cq.from(ApplicationUser.class)));
+    var count = entityManager.createQuery(cq).getSingleResult();
+
+    if (count == 0) {
+      applicationUser.setRole(RoleEnum.ADMIN);
+    } else {
+      applicationUser.setRole(RoleEnum.MEMBER);
+    }
+
     entityManager.persist(applicationUser);
     return applicationUser;
   }
