@@ -58,4 +58,9 @@ public class ApplicationUserService {
     return user;
   }
 
+  public ApplicationUser findById(long id) {
+    var user = entityManager.find(ApplicationUser.class, id);
+    return user;
+  }
+
 }
