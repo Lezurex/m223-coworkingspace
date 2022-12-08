@@ -21,18 +21,20 @@ public class DevDataService {
   @Inject
   EntityManager entityManager;
 
+  @Inject
+  HashingService hashingService;
+
   @Transactional
   public void generateTestData(@Observes StartupEvent event) {
     clearData();
 
     var userJonathan = new ApplicationUser("jonathan.meier@coworking.ch", "Jonathan", "Meier",
-        "JonathanFTW123", RoleEnum.ADMIN);
+        hashingService.hashPassword("JonathanFTW123"), RoleEnum.ADMIN);
     entityManager.persist(userJonathan);
 
     var userLisbeth = new ApplicationUser("lisbeth.zbinden@bluewin.ch", "Lisbeth", "z'Binden",
-        "RacletteZumZmorgu123", RoleEnum.MEMBER);
+        hashingService.hashPassword("RacletteZumZmorgu123"), RoleEnum.MEMBER);
     entityManager.persist(userLisbeth);
-
     var bookingA =
         new Booking(LocalDate.now(), TimeframeEnum.MORNING, StatusEnum.CONFIRMED, userLisbeth);
     entityManager.persist(bookingA);

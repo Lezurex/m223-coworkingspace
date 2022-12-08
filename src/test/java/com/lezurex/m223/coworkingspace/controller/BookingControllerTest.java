@@ -43,8 +43,7 @@ public class BookingControllerTest {
   @Test
   @Order(2)
   public void testPostEndpoint() {
-    var payload = new Booking(LocalDate.now().plusDays(3), TimeframeEnum.AFTERNOON,
-        StatusEnum.CONFIRMED, null);
+    var payload = new Booking(LocalDate.now().plusDays(3), TimeframeEnum.AFTERNOON, null, null);
 
     given().when().contentType(ContentType.JSON).body(payload).post().then().statusCode(200)
         .body("date", is(payload.getDate().toString())).body("timeframe", is("AFTERNOON"));

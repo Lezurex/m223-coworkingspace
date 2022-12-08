@@ -17,6 +17,7 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import com.lezurex.m223.coworkingspace.model.ApplicationUser;
 import com.lezurex.m223.coworkingspace.service.ApplicationUserService;
+import com.lezurex.m223.coworkingspace.service.HashingService;
 
 @Path("/users")
 @Tag(name = "Users", description = "Handling of users.")
@@ -25,6 +26,9 @@ public class ApplicationUserController {
 
   @Inject
   ApplicationUserService applicationUserService;
+
+  @Inject
+  HashingService hashingService;
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -40,6 +44,8 @@ public class ApplicationUserController {
   @Operation(summary = "Creates a new user.",
       description = "Creates a new user and returns the newly added user.")
   public ApplicationUser create(ApplicationUser applicationUser) {
+    applicationUser.setPasswordHash(hashingService.hashPassword(applicationUser.getPasswordHash()));
+
     return applicationUserService.createApplicationUser(applicationUser);
   }
 

@@ -19,11 +19,14 @@ import io.smallrye.jwt.build.JwtClaimsBuilder;
 public class SessionService {
   @Inject
   ApplicationUserService applicationUserService;
+  
+  @Inject
+  HashingService hashingService;
 
   public Response authenticate(Credential credential) {
     Optional<ApplicationUser> principal = applicationUserService.findByEmail(credential.getEmail());
     if (principal.isPresent()
-        && principal.get().getPasswordHash().equals(credential.getPassword())) {
+        && hashingService.verifyPassword(credential.getPassword(), principal.get().getPasswordHash())) {
       var jwt = Jwt.issuer("https://example.com/issuer").upn(principal.get().getEmail())
           .expiresIn(Duration.ofDays(1)).groups(new HashSet<>(Arrays.asList("user", "admin")));
       setRoles(jwt, principal.get());
