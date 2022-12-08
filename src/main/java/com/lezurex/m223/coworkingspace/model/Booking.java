@@ -40,11 +40,6 @@ public class Booking {
     this.applicationUser = applicationUser;
   }
 
-  public Booking(LocalDate date, TimeframeEnum timeframe) {
-    this.date = date;
-    this.timeframe = timeframe;
-  }
-
   public Booking() {}
 
   public long getId() {

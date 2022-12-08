@@ -118,10 +118,6 @@ public class ApplicationUser {
     return bookings;
   }
 
-  public void setBookings(Set<Booking> bookings) {
-    this.bookings = bookings;
-  }
-
   public String getFavouriteCoffee() {
     return favouriteCoffee;
   }
