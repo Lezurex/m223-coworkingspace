@@ -30,11 +30,11 @@ während der Ausführung befindet.
 
 ## Entwicklungsumgebung
 
-Die Entwicklungsumgebung ist in einem [Development Container](https://containers.dev/) organisiert.
+Die Entwicklungsumgebung ist in [Development Containern](https://containers.dev/) organisiert.
 
 ### Einrichtung
 
-Der Development Container können auf zwei Wege gestartet werden:
+Die Development Container können auf zwei Wege gestartet werden:
 
 - Mit der Visual Studio Code Extension [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 Die nötigen Dienste starten automatisch.
